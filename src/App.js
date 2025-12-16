@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ListaVeiculos from './screens/ListaVeiculos';
 import DetalhesVeiculo from './screens/DetalhesVeiculo';
+import FormVeiculo from './screens/FormVeiculo';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
           component={DetalhesVeiculo}
           options={{ title: 'Detalhes do Veículo' }}
         />
+        <Stack.Screen name="FormVeiculo" component={FormVeiculo} />
       </Stack.Navigator>
     </NavigationContainer>
   );

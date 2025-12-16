@@ -1,58 +1,46 @@
 import { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { FontAwesome } from '@expo/vector-icons';
-import { supabase } from '../services/supabase';
+import { listarVeiculos } from '../services/veiculoService';
+import CardVeiculo from '../components/CardVeiculo';
+import ActionButton from '../components/ActionButton';
 
 export default function ListaVeiculos({ navigation }) {
   const [lista, setLista] = useState([]);
 
+  async function carregarVeiculos() {
+    const { data, error } = await listarVeiculos();
+    if (!error) setLista(data);
+    else console.log('Erro ao carregar veículos:', error.message);
+  }
+
   useEffect(() => {
-    async function carregar() {
-      const { data, error } = await supabase.from('veiculos').select('*');
-      if (!error) setLista(data);
-      else console.log('Erro ao carregar veículos:', error.message);
-    }
-    carregar();
+    carregarVeiculos();
   }, []);
 
   return (
-    <LinearGradient colors={['#667eea', '#764ba2']} style={styles.background}>
+    <LinearGradient colors={['#2D1E2F', '#3A1C71']} style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.titulo}>Veículos</Text>
+
+        <ActionButton
+          text="+ Novo Veículo"
+          onPress={() =>
+            navigation.navigate('FormVeiculo', {
+              onSave: carregarVeiculos,
+            })
+          }
+        />
 
         <FlatList
           data={lista}
           keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.card}
+            <CardVeiculo
+              veiculo={item}
               onPress={() => navigation.navigate('Detalhes', { veiculo: item })}
-            >
-              <View style={styles.row}>
-                <FontAwesome name="car" size={26} color="#FFD700" />
-                <View style={{ marginLeft: 12 }}>
-                  <Text style={styles.nome}>{item.modelo}</Text>
-                  <Text style={styles.placa}>{item.placa}</Text>
-                </View>
-              </View>
-
-              <View style={styles.statusRow}>
-                <FontAwesome
-                  name="check-circle"
-                  size={22}
-                  color={item.status === 'Ativo' ? '#00FF00' : '#FF0000'}
-                />
-                <Text style={styles.statusText}>{item.status}</Text>
-              </View>
-            </TouchableOpacity>
+            />
           )}
         />
       </View>
@@ -74,42 +62,5 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
     color: '#fff',
-  },
-
-  card: {
-    backgroundColor: 'rgba(255,255,255,0.15)',
-    padding: 18,
-    borderRadius: 15,
-    marginBottom: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  nome: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-
-  placa: {
-    fontSize: 14,
-    color: '#e0e0e0',
-  },
-
-  statusRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  statusText: {
-    marginLeft: 6,
-    color: '#fff',
-    fontWeight: '600',
   },
 });
