@@ -12,3 +12,8 @@ export async function criarVeiculo(veiculo) {
 export async function editarVeiculo(id, veiculo) {
   return supabase.from('veiculos').update(veiculo).eq('id', id);
 }
+
+export async function excluirVeiculo(id) {
+  const { data, error } = await supabase.from('veiculos').delete().eq('id', id);
+  return { data, error };
+}

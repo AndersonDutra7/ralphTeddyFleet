@@ -36,14 +36,23 @@ A arquitetura do projeto segue a divisão modular para facilitar a manutenção 
 
 RalphTeddyFleet/
 ├── src/
+│ ├── components/
+│ │ ├── ActionButton.js
+│ │ ├── CardVeiculo.js
+│ │ └── DetalhesItem.js
+│ │ └── InputField.js
+│ │ └── SelectInput.js
 │ ├── screens/
+│ │ ├── FormVeiculo.js
 │ │ ├── ListaVeiculos.js
 │ │ └── DetalhesVeiculo.js
 │ │ └── Login.js
 │ ├── services/
 │ │ └── supabase.js
+│ │ └── veiculoService.js
 │ ├── utils/
 │ │ └── testeSupabase.js
+│ │ └── validators.js
 │ └── App.js
 └── ...
 

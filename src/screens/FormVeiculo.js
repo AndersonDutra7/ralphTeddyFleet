@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { criarVeiculo, editarVeiculo } from '../services/veiculoService';
 import { validarCamposObrigatorios } from '../utils/validators';
 import InputField from '../components/InputField';
-import SubmitButton from '../components/SubmitButton';
+import ActionButton from '../components/ActionButton';
 import SelectInput from '../components/SelectInput';
 
 export default function FormVeiculo({ navigation, route }) {
@@ -53,10 +53,10 @@ export default function FormVeiculo({ navigation, route }) {
       );
 
       if (route.params?.onSave) {
-        route.params.onSave(); // atualiza a lista
+        route.params.onSave();
       }
 
-      navigation.goBack(); // volta para a tela anterior
+      navigation.goBack();
     }
 
     console.log('Resposta do serviço:', { error });
@@ -99,11 +99,12 @@ export default function FormVeiculo({ navigation, route }) {
           ]}
         />
 
-        <SubmitButton
-          loading={loading}
+        <ActionButton
+          text="Salvar"
           onPress={salvar}
-          text={'Salvar'}
-        ></SubmitButton>
+          loading={loading}
+          color="#2e86de"
+        />
       </View>
     </LinearGradient>
   );

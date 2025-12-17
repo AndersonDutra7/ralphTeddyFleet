@@ -25,6 +25,7 @@ export default function ListaVeiculos({ navigation }) {
 
         <ActionButton
           text="+ Novo Veículo"
+          color="#27ae60"
           onPress={() =>
             navigation.navigate('FormVeiculo', {
               onSave: carregarVeiculos,
@@ -39,7 +40,12 @@ export default function ListaVeiculos({ navigation }) {
           renderItem={({ item }) => (
             <CardVeiculo
               veiculo={item}
-              onPress={() => navigation.navigate('Detalhes', { veiculo: item })}
+              onPress={() =>
+                navigation.navigate('DetalhesVeiculo', {
+                  veiculo: item,
+                  onSave: carregarVeiculos, // passa callback para detalhes
+                })
+              }
             />
           )}
         />

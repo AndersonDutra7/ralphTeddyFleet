@@ -16,7 +16,7 @@ export default function App() {
           options={{ title: 'Veículos' }}
         />
         <Stack.Screen
-          name="Detalhes"
+          name="DetalhesVeiculo"
           component={DetalhesVeiculo}
           options={{ title: 'Detalhes do Veículo' }}
         />
